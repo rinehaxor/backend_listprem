@@ -3,7 +3,7 @@
 ## 1. Buka Dashboard, Buat API Key
 
 1. Buka http://localhost:8000/admin
-2. Login: `fionaolivia177@gmail.com` / `2133qwe1`
+2. Login: `admin@admin.com` / `password` (Atau kredensial yang baru kamu buat)
 3. Klik **API Keys** di sidebar → **Create**
 4. Isi **Name**: `Telegram Bot`, **Platform**: `Telegram`
 5. **Copy API Key** yang muncul

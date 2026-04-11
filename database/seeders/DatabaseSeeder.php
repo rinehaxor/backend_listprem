@@ -9,11 +9,12 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create admin user for Filament
+        // Create admin user for Filament (Default)
+        // PENTING: Jangan masukkan password asli kamu di sini jika di push ke Github
         User::factory()->create([
-            'name' => 'Fiona Olivia',
-            'email' => 'fionaolivia177@gmail.com',
-            'password' => bcrypt('2133qwe1'),
+            'name' => 'Admin Baru',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('password'),
         ]);
 
         // Seed sample data

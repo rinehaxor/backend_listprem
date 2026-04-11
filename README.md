@@ -85,8 +85,8 @@ Buka:
 
 | | |
 |---|---|
-| **Email** | `fionaolivia177@gmail.com` |
-| **Password** | `2133qwe1` |
+| **Email** | `admin@admin.com` (Ubah di dashboard/seeder!) |
+| **Password** | `password` |
 
 ---
 
