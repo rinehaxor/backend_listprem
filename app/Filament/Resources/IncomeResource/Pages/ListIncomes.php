@@ -30,7 +30,8 @@ class ListIncomes extends ListRecords
                     \Filament\Forms\Components\Textarea::make('json_text')
                         ->label('Raw JSON Text')
                         ->rows(8)
-                        ->placeholder('[{"aplikasi": "CapCut", "jenis": "1 bulan", "laba": 10000}]'),
+                        ->placeholder('[{"tanggal": "2026-04-11", "aplikasi": "CapCut", "jenis": "1 bulan", "laba": 10000}, {"tanggal": "2026-04-11", "aplikasi": "Canva", "jenis": "1 bulan", "laba": 8000}]')
+                        ->helperText('Contoh format: [{"tanggal": "2026-04-11", "aplikasi": "CapCut", "jenis": "1 bulan", "laba": 10000}] — Field tanggal opsional (default: hari ini)'),
                 ])
                 ->action(function (array $data) {
                     $json = '';

@@ -53,7 +53,7 @@ class EmailResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->label('#')->sortable(),
+                Tables\Columns\TextColumn::make('No')->rowIndex()->label('#'),
                 Tables\Columns\TextColumn::make('akun')->searchable()->copyable(),
                 Tables\Columns\TextColumn::make('password')
                     ->copyable()

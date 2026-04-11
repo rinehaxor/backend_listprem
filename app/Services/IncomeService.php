@@ -49,9 +49,11 @@ class IncomeService
 
         $total = 0;
         $lines = [];
+        $no = 1;
         foreach ($incomes as $income) {
             $total += $income->laba;
-            $lines[] = "#{$income->id} {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)}";
+            $lines[] = "{$no}. {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)} (ID: {$income->id})";
+            $no++;
         }
 
         $message = "📌 Hari ini ({$today->format('d/m/Y')})\n" . implode("\n", $lines) . "\n\nTotal: {$this->formatIDR($total)}";
@@ -73,9 +75,11 @@ class IncomeService
 
         $total = 0;
         $lines = [];
+        $no = 1;
         foreach ($incomes as $income) {
             $total += $income->laba;
-            $lines[] = "#{$income->id} {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)}";
+            $lines[] = "{$no}. {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)} (ID: {$income->id})";
+            $no++;
         }
 
         $message = "📌 Kemarin ({$yesterday->format('d/m/Y')})\n" . implode("\n", $lines) . "\n\nTotal: {$this->formatIDR($total)}";
@@ -100,11 +104,13 @@ class IncomeService
         $total = 0;
         $lines = [];
         $dailyTotals = [];
+        $no = 1;
 
         foreach ($incomes as $income) {
             $total += $income->laba;
             $tgl = Carbon::parse($income->tanggal)->format('d/m/Y');
-            $lines[] = "#{$income->id} {$tgl} | {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)}";
+            $lines[] = "{$no}. {$tgl} | {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)} (ID: {$income->id})";
+            $no++;
 
             if (!isset($dailyTotals[$tgl])) $dailyTotals[$tgl] = 0;
             $dailyTotals[$tgl] += $income->laba;
@@ -138,11 +144,13 @@ class IncomeService
         $total = 0;
         $lines = [];
         $dailyTotals = [];
+        $no = 1;
 
         foreach ($incomes as $income) {
             $total += $income->laba;
             $tgl = Carbon::parse($income->tanggal)->format('d/m/Y');
-            $lines[] = "#{$income->id} {$tgl} | {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)}";
+            $lines[] = "{$no}. {$tgl} | {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)} (ID: {$income->id})";
+            $no++;
 
             if (!isset($dailyTotals[$tgl])) $dailyTotals[$tgl] = 0;
             $dailyTotals[$tgl] += $income->laba;
@@ -172,10 +180,12 @@ class IncomeService
 
         $total = 0;
         $lines = [];
+        $no = 1;
         foreach ($incomes as $income) {
             $total += $income->laba;
             $tgl = Carbon::parse($income->tanggal)->format('d/m/Y');
-            $lines[] = "#{$income->id} {$tgl} | {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)}";
+            $lines[] = "{$no}. {$tgl} | {$income->aplikasi} | {$income->jenis} | {$this->formatIDR($income->laba)} (ID: {$income->id})";
+            $no++;
         }
 
         $message = "📋 Semua Transaksi\n" . implode("\n", $lines) . "\n\nTotal: {$this->formatIDR($total)}";

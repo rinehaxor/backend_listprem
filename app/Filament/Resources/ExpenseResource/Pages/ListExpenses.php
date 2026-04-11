@@ -30,7 +30,8 @@ class ListExpenses extends ListRecords
                     \Filament\Forms\Components\Textarea::make('json_text')
                         ->label('Raw JSON Text')
                         ->rows(8)
-                        ->placeholder('[{"kategori": "Makan", "keterangan": "Nasi", "nominal": 15000}]'),
+                        ->placeholder('[{"tanggal": "2026-04-11", "kategori": "Makan", "keterangan": "Nasi Goreng", "nominal": 15000}, {"tanggal": "2026-04-11", "kategori": "Akun", "keterangan": "Beli akun CapCut", "nominal": 25000}]')
+                        ->helperText('Contoh format: [{"tanggal": "2026-04-11", "kategori": "Makan", "keterangan": "Nasi", "nominal": 15000}] — Field tanggal opsional (default: hari ini)'),
                 ])
                 ->action(function (array $data) {
                     $json = '';

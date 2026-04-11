@@ -45,10 +45,12 @@ class ExpenseService
 
         $total = 0;
         $lines = [];
+        $no = 1;
         foreach ($expenses as $expense) {
             $total += $expense->nominal;
             $tgl = Carbon::parse($expense->tanggal)->format('d/m/Y');
-            $lines[] = "#{$expense->id} {$tgl} | {$expense->kategori} | {$expense->keterangan} | {$this->formatIDR($expense->nominal)}";
+            $lines[] = "{$no}. {$tgl} | {$expense->kategori} | {$expense->keterangan} | {$this->formatIDR($expense->nominal)} (ID: {$expense->id})";
+            $no++;
         }
 
         $message = "💸 Semua Pengeluaran\n" . implode("\n", $lines) . "\n\nTotal: {$this->formatIDR($total)}";
@@ -71,10 +73,12 @@ class ExpenseService
         $total = 0;
         $lines = [];
         $kategoriTotals = [];
+        $no = 1;
 
         foreach ($expenses as $expense) {
             $total += $expense->nominal;
-            $lines[] = "#{$expense->id} {$expense->kategori} | {$expense->keterangan} | {$this->formatIDR($expense->nominal)}";
+            $lines[] = "{$no}. {$expense->kategori} | {$expense->keterangan} | {$this->formatIDR($expense->nominal)} (ID: {$expense->id})";
+            $no++;
 
             if (!isset($kategoriTotals[$expense->kategori])) $kategoriTotals[$expense->kategori] = 0;
             $kategoriTotals[$expense->kategori] += $expense->nominal;
@@ -112,11 +116,13 @@ class ExpenseService
         $total = 0;
         $lines = [];
         $kategoriTotals = [];
+        $no = 1;
 
         foreach ($expenses as $expense) {
             $total += $expense->nominal;
             $tgl = Carbon::parse($expense->tanggal)->format('d/m/Y');
-            $lines[] = "#{$expense->id} {$tgl} | {$expense->kategori} | {$expense->keterangan} | {$this->formatIDR($expense->nominal)}";
+            $lines[] = "{$no}. {$tgl} | {$expense->kategori} | {$expense->keterangan} | {$this->formatIDR($expense->nominal)} (ID: {$expense->id})";
+            $no++;
 
             if (!isset($kategoriTotals[$expense->kategori])) $kategoriTotals[$expense->kategori] = 0;
             $kategoriTotals[$expense->kategori] += $expense->nominal;

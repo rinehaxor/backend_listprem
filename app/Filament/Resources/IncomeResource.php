@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\IncomeResource\Pages;
 use App\Models\Income;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -66,9 +67,9 @@ class IncomeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('#')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('No')
+                    ->rowIndex()
+                    ->label('#'),
                 Tables\Columns\TextColumn::make('tanggal')
                     ->date('d/m/Y')
                     ->sortable(),
@@ -102,6 +103,36 @@ class IncomeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Tables\Filters\Filter::make('bulan')
+                    ->form([
+                        Forms\Components\Select::make('bulan')
+                            ->options([
+                                1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
+                                4 => 'April', 5 => 'Mei', 6 => 'Juni',
+                                7 => 'Juli', 8 => 'Agustus', 9 => 'September',
+                                10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+                            ])
+                            ->default(Carbon::now()->month)
+                            ->label('Bulan'),
+                        Forms\Components\Select::make('tahun')
+                            ->options(fn () => collect(range(Carbon::now()->year, Carbon::now()->year - 2))
+                                ->mapWithKeys(fn ($y) => [$y => $y])->toArray())
+                            ->default(Carbon::now()->year)
+                            ->label('Tahun'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        $bulan = $data['bulan'] ?? Carbon::now()->month;
+                        $tahun = $data['tahun'] ?? Carbon::now()->year;
+                        return $query
+                            ->whereMonth('tanggal', $bulan)
+                            ->whereYear('tanggal', $tahun);
+                    })
+                    ->indicateUsing(function (array $data): ?string {
+                        $bulanNames = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des'];
+                        $bulan = $data['bulan'] ?? Carbon::now()->month;
+                        $tahun = $data['tahun'] ?? Carbon::now()->year;
+                        return ($bulanNames[(int)$bulan] ?? '') . ' ' . $tahun;
+                    }),
                 Tables\Filters\SelectFilter::make('aplikasi')
                     ->options(fn () => Income::distinct()->pluck('aplikasi', 'aplikasi')->toArray()),
                 Tables\Filters\SelectFilter::make('jenis')

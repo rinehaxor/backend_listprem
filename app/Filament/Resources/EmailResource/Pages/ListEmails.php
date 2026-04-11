@@ -29,7 +29,8 @@ class ListEmails extends ListRecords
                     \Filament\Forms\Components\Textarea::make('json_text')
                         ->label('Raw JSON Text')
                         ->rows(8)
-                        ->placeholder('[{"akun": "a@gmail.com", "password": "pass", "keterangan": "Main"}]'),
+                        ->placeholder('[{"akun": "user1@gmail.com", "password": "pass123", "keterangan": "Email utama"}, {"akun": "user2@gmail.com", "password": "pass456", "keterangan": "Email cadangan"}]')
+                        ->helperText('Contoh format: [{"akun": "email@gmail.com", "password": "pass123", "keterangan": "Email utama"}]'),
                 ])
                 ->action(function (array $data) {
                     $json = '';

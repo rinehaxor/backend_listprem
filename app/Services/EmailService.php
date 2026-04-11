@@ -36,8 +36,10 @@ class EmailService
         }
 
         $lines = [];
+        $no = 1;
         foreach ($emails as $email) {
-            $lines[] = "#{$email->id} {$email->akun} | {$email->password} | {$email->keterangan}";
+            $lines[] = "{$no}. {$email->akun} | {$email->password} | {$email->keterangan} (ID: {$email->id})";
+            $no++;
         }
 
         $message = "📧 Semua Email\n" . implode("\n", $lines) . "\n\nTotal: " . count($emails) . " email";
