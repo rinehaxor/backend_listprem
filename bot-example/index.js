@@ -96,6 +96,12 @@ bot.onText(/\/(start|help)/, (msg) => {
 /emailedit <nomor> <field> <value>
 /emaildelete <nomor>
 
+✖️ *X ACCOUNT*
+/x Nama | Username | Email | Status | Link
+/xlist - Semua X tercatat
+/xedit <nomor> <field> <value>
+/xdelete <nomor>
+
 /help - Tampilkan bantuan ini
 
 *Contoh:*
@@ -310,6 +316,62 @@ bot.onText(/\/emailedit\s+(\d+)\s+(\w+)\s+(.+)/, async (msg, match) => {
 // /emaildelete <nomor>
 bot.onText(/\/emaildelete\s+(\d+)/, async (msg, match) => {
    await callApi(msg.chat.id, 'delete', `/emails/${match[1]}`);
+});
+
+// ===== X ACCOUNT =====
+
+// /x Nama | Username | Email | Status | Link
+bot.onText(/\/x\s+(.+)/, async (msg, match) => {
+   const chatId = msg.chat.id;
+   const text = msg.text;
+   const raw = text.slice(3).trim();
+   const parts = raw.split('|').map((s) => s.trim()).filter(Boolean);
+
+   if (parts.length < 5) {
+      return bot.sendMessage(
+         chatId,
+         '❌ Format salah.\nPakai:\n/x Nama | Username | Email | Status | Link\n\n*Contoh:*\n/x Akun Pribadi | @johndoe | john@gmail.com | Aktif | https://x.com/johndoe',
+         { parse_mode: 'Markdown' },
+      );
+   }
+
+   const senderName = msg.from.first_name || msg.from.username || 'Seseorang';
+   await callApi(chatId, 'post', '/x-accounts', {
+      nama: parts[0],
+      username: parts[1],
+      email: parts[2],
+      status: parts[3],
+      link: parts[4],
+      source_user: senderName,
+   });
+});
+
+// /xlist
+bot.onText(/\/xlist/, async (msg) => {
+   await callApi(msg.chat.id, 'get', '/x-accounts');
+});
+
+// /xedit <nomor> <field> <value>
+bot.onText(/\/xedit\s+(\d+)\s+(\w+)\s+(.+)/, async (msg, match) => {
+   const chatId = msg.chat.id;
+   const id = match[1];
+   const field = match[2].toLowerCase();
+   const value = match[3].trim();
+
+   const validFields = ['nama', 'username', 'email', 'status', 'link'];
+   if (!validFields.includes(field)) {
+      return bot.sendMessage(chatId, `❌ Field tidak valid. Gunakan: nama, username, email, status, atau link`);
+   }
+
+   const data = {};
+   data[field] = value;
+
+   await callApi(chatId, 'put', `/x-accounts/${id}`, data);
+});
+
+// /xdelete <nomor>
+bot.onText(/\/xdelete\s+(\d+)/, async (msg, match) => {
+   await callApi(msg.chat.id, 'delete', `/x-accounts/${match[1]}`);
 });
 
 // ===== ERROR HANDLING =====

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\EmailController;
 use App\Http\Controllers\Api\V1\ExpenseController;
 use App\Http\Controllers\Api\V1\IncomeController;
+use App\Http\Controllers\Api\V1\XAccountController;
 use App\Http\Middleware\ValidateApiKey;
 use Illuminate\Support\Facades\Route;
 
@@ -49,5 +50,13 @@ Route::prefix('v1')->middleware(ValidateApiKey::class)->group(function () {
         Route::post('/', [EmailController::class, 'store']);          // /email
         Route::put('/{id}', [EmailController::class, 'update']);      // /emailedit
         Route::delete('/{id}', [EmailController::class, 'destroy']); // /emaildelete
+    });
+
+    // ===== X ACCOUNT =====
+    Route::prefix('x-accounts')->group(function () {
+        Route::get('/', [XAccountController::class, 'index']);           // /xlist
+        Route::post('/', [XAccountController::class, 'store']);          // /x
+        Route::put('/{id}', [XAccountController::class, 'update']);      // /xedit
+        Route::delete('/{id}', [XAccountController::class, 'destroy']); // /xdelete
     });
 });
