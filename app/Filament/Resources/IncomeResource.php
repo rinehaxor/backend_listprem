@@ -67,7 +67,7 @@ class IncomeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('No')
+                Tables\Columns\TextColumn::make('row_number')
                     ->rowIndex()
                     ->label('#'),
                 Tables\Columns\TextColumn::make('tanggal')

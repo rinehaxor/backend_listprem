@@ -62,7 +62,7 @@ class ExpenseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('No')->rowIndex()->label('#'),
+                Tables\Columns\TextColumn::make('row_number')->rowIndex()->label('#'),
                 Tables\Columns\TextColumn::make('tanggal')->date('d/m/Y')->sortable(),
                 Tables\Columns\TextColumn::make('kategori')
                     ->searchable()
